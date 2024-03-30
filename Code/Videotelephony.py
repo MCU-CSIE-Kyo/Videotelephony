@@ -48,7 +48,7 @@ class Videotelephony:
                 self.udp_socket_sender.sendto(byte_data, self.ip_and_port)
             except:
                 pass
-            if cv2.waitKey(1) and 0xFF == ord('q'):
+            if cv2.waitKey(1) & 0xFF == ord('q'):
                 self.stop_condition = True
                 break
         self.cap.release()
@@ -65,7 +65,6 @@ class Videotelephony:
     def receive_video_information(self):
         while True:
             payload, self.dst_ip = self.udp_socket_receiver.recvfrom(102400)
-            print(payload)
             remote_frame = self.__video_deserialization(payload)
             cv2.imshow('REMOTE', remote_frame)
             cv2.waitKey(5)
